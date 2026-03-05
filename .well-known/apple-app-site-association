@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["745RJB4UQN.com.heartbeat.app"],
+        "components": [
+          {
+            "/": "/invite/*",
+            "comment": "Matches /invite/XXXXXX invite links"
+          }
+        ]
+      }
+    ]
+  }
+}
