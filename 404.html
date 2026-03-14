@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BeatTogether — синхронизируй сердца</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Rounded', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card { max-width: 380px; width: 100%; text-align: center; }
+    .heart { font-size: 72px; margin-bottom: 24px; animation: pulse 1.2s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.12); }
+    }
+    h1   { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+    .sub { color: #888; font-size: 15px; line-height: 1.5; margin-bottom: 36px; }
+    .btn {
+      display: block; width: 100%; padding: 18px;
+      border-radius: 16px; font-size: 17px; font-weight: 600;
+      text-decoration: none; margin-bottom: 12px;
+    }
+    .btn-appstore { background: #e5001a; color: #fff; }
+    .btn-open {
+      background: rgba(255,255,255,0.08); color: #fff;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .note { color: #555; font-size: 12px; margin-top: 24px; }
+    .not-found { color: #555; font-size: 16px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <div class="card" id="invite-card" style="display:none">
+    <div class="heart">❤️</div>
+    <h1>Тебя приглашают!</h1>
+    <p class="sub">
+      Установи BeatTogether и синхронизируй<br>
+      своё сердце с близким человеком.
+    </p>
+    <a class="btn btn-appstore" href="https://apps.apple.com/app/id6760045267">
+      📲 Скачать BeatTogether
+    </a>
+    <a class="btn btn-open" id="open-btn" style="display:none">
+      Уже установлено? Открыть приложение
+    </a>
+    <p class="note">После установки ссылка откроется автоматически.</p>
+  </div>
+  <p class="not-found" id="not-found" style="display:none">Страница не найдена.</p>
+
+  <script>
+    var path  = window.location.pathname;
+    // matches /beattogether-links/invite/XXXXXX
+    var match = path.match(/\/invite\/([A-Za-z0-9]{6})$/);
+
+    if (match) {
+      var code = match[1].toUpperCase();
+      document.getElementById('invite-card').style.display = 'block';
+
+      // On iOS show "open app" button (Universal Link opens app before page loads
+      // if app is installed; this button is shown as fallback)
+      if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        var btn = document.getElementById('open-btn');
+        btn.style.display = 'block';
+        btn.href = 'beattogether://invite/' + code;
+      }
+    } else {
+      document.getElementById('not-found').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
